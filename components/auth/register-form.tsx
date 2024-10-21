@@ -69,7 +69,7 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Sign In</Button>
+        <Button type="submit" className="w-full">Sign Up</Button>
       </form>
     </Form>
   )
