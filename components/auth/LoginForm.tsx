@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { LoginSchema } from "@/schemas"
+import { login } from "@/actions/login"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,11 +16,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string()
-})
-
 const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -29,7 +26,7 @@ const LoginForm = () => {
   })
 
   function onSubmit(data: z.infer<typeof LoginSchema>) {
-    console.log(data);
+    login(data)
   }
 
   return (
