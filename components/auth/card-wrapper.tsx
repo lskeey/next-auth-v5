@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Social from "./Social"
+import Social from "./social"
 
 interface CardWrapperProps {
   children: React.ReactNode

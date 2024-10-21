@@ -1,5 +1,5 @@
-import CardWrapper from "./CardWrapper"
-import LoginForm from "./LoginForm"
+import CardWrapper from "./card-wrapper"
+import LoginForm from "./login-form"
 
 const LoginCard = () => {
   return (
