@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { RegisterSchema } from "@/schemas"
-import { login } from "@/actions/login"
+import { register } from "@/actions/register"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -27,7 +27,7 @@ const RegisterForm = () => {
   })
 
   function onSubmit(data: z.infer<typeof RegisterSchema>) {
-    login(data)
+    register(data)
   }
 
   return (
