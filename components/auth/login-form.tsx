@@ -15,8 +15,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useState, useTransition } from "react"
+import { FormError } from "../form-error"
+import { FormSuccess } from "../form-success"
 
 const LoginForm = () => {
+  const [error, setError] = useState<string | undefined>("")
+  const [success, setSuccess] = useState<string | undefined>("")
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -26,7 +33,15 @@ const LoginForm = () => {
   })
 
   function onSubmit(data: z.infer<typeof LoginSchema>) {
-    login(data)
+    setError("")
+    setSuccess("")
+
+    startTransition(() => {
+      login(data).then((data) => {
+        setError(data.error)
+        setSuccess(data.success)
+      })
+    })
   }
 
   return (
@@ -38,7 +53,7 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="email" placeholder="Email" {...field} />
+                <Input type="email" placeholder="Email" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -50,13 +65,15 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder="Password" {...field} />
+                <Input type="password" placeholder="Password" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Sign In</Button>
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        <Button type="submit" className="w-full" disabled={isPending}>Sign In</Button>
       </form>
     </Form>
   )

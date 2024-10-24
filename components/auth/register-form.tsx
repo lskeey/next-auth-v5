@@ -15,8 +15,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useState, useTransition } from "react"
+import { FormError } from "../form-error"
+import { FormSuccess } from "../form-success"
 
 const RegisterForm = () => {
+  const [error, setError] = useState<string | undefined>("")
+  const [success, setSuccess] = useState<string | undefined>("")
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -27,7 +34,15 @@ const RegisterForm = () => {
   })
 
   function onSubmit(data: z.infer<typeof RegisterSchema>) {
-    register(data)
+    setError("")
+    setSuccess("")
+
+    startTransition(() => {
+      register(data).then((data) => {
+        setError(data.error)
+        setSuccess(data.success)
+      })
+    })
   }
 
   return (
@@ -39,7 +54,7 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="text" placeholder="Name" {...field} />
+                <Input type="text" placeholder="Name" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -51,7 +66,7 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="email" placeholder="Email" {...field} />
+                <Input type="email" placeholder="Email" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -63,13 +78,15 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder="Password" {...field} />
+                <Input type="password" placeholder="Password" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Sign Up</Button>
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        <Button type="submit" className="w-full" disabled={isPending}>Sign Up</Button>
       </form>
     </Form>
   )
