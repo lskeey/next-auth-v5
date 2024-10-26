@@ -31,13 +31,15 @@ const CardWrapper = ({
         {children}
       </CardContent>
       <CardFooter className="flex-col space-y-6">
-        <div className="w-full flex items-center gap-2">
-          <div className="flex-1 border"></div>
-            <span className="text-xs">or sign in with</span>
-          <div className="flex-1 border"></div>
-        </div>
         {showSocial && (
-          <Social />
+          <div className="w-full flex items-center gap-2">
+            <div className="flex-1 border"></div>
+              <span className="text-xs">or sign in with</span>
+            <div className="flex-1 border"></div>
+          </div>
+        )}
+        {showSocial && (
+            <Social />
         )}
         <a href={switchButtonHref} className="text-sm hover:underline">{switchButtonLabel}</a>
       </CardFooter>
