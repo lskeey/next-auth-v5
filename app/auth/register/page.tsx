@@ -1,7 +1,7 @@
-import RegisterCard from "@/components/auth/register-card";
+import RegisterForm from "@/components/auth/register-form";
 
 export default function RegisterPage () {
   return (
-    <RegisterCard />
+    <RegisterForm />
   )
 }

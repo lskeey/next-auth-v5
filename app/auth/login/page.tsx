@@ -1,7 +1,7 @@
-import LoginCard from "@/components/auth/login-card";
+import LoginForm from "@/components/auth/login-form";
 
 export default function LoginPage () {
   return (
-    <LoginCard />
+    <LoginForm />
   )
 }

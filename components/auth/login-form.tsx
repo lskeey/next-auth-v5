@@ -20,6 +20,7 @@ import { useState, useTransition } from "react"
 import { FormError } from "../form-error"
 import { FormSuccess } from "../form-success"
 import Link from "next/link"
+import CardWrapper from "./card-wrapper"
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
@@ -50,38 +51,44 @@ const LoginForm = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input type="email" placeholder="Email" {...field} disabled={isPending} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input type="password" placeholder="Password" {...field} disabled={isPending} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Link href="/auth/reset" className="block text-sm hover:underline">Forgot password?</Link>
-        <FormError message={error || urlError} />
-        <FormSuccess message={success} />
-        <Button type="submit" className="w-full" disabled={isPending}>Sign In</Button>
-      </form>
-    </Form>
+    <CardWrapper
+      headerLabel="Login"
+      switchButtonLabel="Don't have an account?"
+      switchButtonHref="/auth/register"
+      showSocial>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="email" placeholder="Email" {...field} disabled={isPending} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="password" placeholder="Password" {...field} disabled={isPending} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Link href="/auth/reset" className="block text-sm hover:underline">Forgot password?</Link>
+          <FormError message={error || urlError} />
+          <FormSuccess message={success} />
+          <Button type="submit" className="w-full" disabled={isPending}>Sign In</Button>
+        </form>
+      </Form>
+    </CardWrapper>
   )
 }
 
