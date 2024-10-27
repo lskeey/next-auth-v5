@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { useState, useTransition } from "react"
 import { FormError } from "../form-error"
 import { FormSuccess } from "../form-success"
+import Link from "next/link"
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
@@ -75,6 +76,7 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
+        <Link href="/auth/reset" className="block text-sm hover:underline">Forgot password?</Link>
         <FormError message={error || urlError} />
         <FormSuccess message={success} />
         <Button type="submit" className="w-full" disabled={isPending}>Sign In</Button>

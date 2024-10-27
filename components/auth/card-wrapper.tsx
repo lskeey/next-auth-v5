@@ -34,7 +34,7 @@ const CardWrapper = ({
         {showSocial && (
           <div className="w-full flex items-center gap-2">
             <div className="flex-1 border"></div>
-              <span className="text-xs">or sign in with</span>
+              <span className="text-sm">or sign in with</span>
             <div className="flex-1 border"></div>
           </div>
         )}
