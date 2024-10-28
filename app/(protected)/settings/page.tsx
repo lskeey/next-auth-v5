@@ -1,20 +1,8 @@
-import { auth, signOut } from "@/auth"
+"use client"
 
-const SettingsPage = async () => {
-  const session = await auth()
-
+const SettingsPage = () => {
   return (
-    <div>
-      {JSON.stringify(session)}
-      <form action={async() => {
-        "use server"
-        await signOut({
-          redirectTo: "/auth/login"
-        })
-      }}>
-        <button type="submit">Sign Out</button>
-      </form>
-    </div>
+    <div>Settings Pages</div>
   )
 }
 
