@@ -12,7 +12,7 @@ export default async function ProtectedLayout({
     <SessionProvider session={session}>
       <div className="min-h-screen bg-[#0d1117] text-[#ecf2f8]">
         <Navbar />
-        <div className="container mx-auto max-w-5xl">
+        <div className="container mx-auto max-w-xl">
           {children}
         </div>
       </div>
