@@ -6,6 +6,7 @@ import { db } from "./lib/db"
 import { getUserById } from "./data/user"
 import { UserRole } from "@prisma/client"
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
+import { getAccountById } from "./data/account"
  
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
@@ -16,10 +17,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   events: {
     async linkAccount({ user }) {
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date()}
-      })
+      if (user) {
+        await db.user.update({
+          where: { id: user.id as string },
+          data: { emailVerified: new Date()}
+        })  
+      }
     }
   },
   callbacks: {
@@ -27,7 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true
 
-      if (account?.provider === "credentials") {
+      if (account?.provider === "credentials" && user.id) {
         // Prevent sign in without email verification
         const existingUser = await getUserById(user.id)
   
@@ -61,15 +64,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
       }
+      if (session.user) {
+        session.user.name = token.name
+        session.user.email = token.email as string
+        session.user.role = token.role as UserRole
+        session.user.isOAuth = token.isOAuth as boolean
+      }
 
       return session
     },
     async jwt({ token }) {
       if (!token.sub) return token
-
+      
       const existingUser = await getUserById(token.sub)
       if (!existingUser) return token
+    
+      const existingAccount = await getAccountById(existingUser.id)
 
+      token.isOAuth = !!existingAccount
+      token.name = existingUser.name
+      token.email = existingUser.email
       token.role = existingUser.role
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
 

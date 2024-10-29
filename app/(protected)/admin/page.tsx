@@ -30,15 +30,15 @@ const AdminPage = () => {
     <div className="text-sm space-y-6 shadow-md px-4 py-6 rounded-md border border-[#161b22]">
       <RoleGate allowedRole={UserRole.ADMIN}>
         <h1>Admin Page</h1>
-        <div className="flex items-center justify-between">
-          <span>Admin-only API Route</span>
-          <Button variant={"secondary"} size={"sm"} onClick={onApiRouteClick}>Click to test</Button>
-        </div>
-        <div className="flex items-center justify-between">
-          <span>Admin-only Server Action</span>
-          <Button variant={"secondary"} size={"sm"} onClick={onServerActionClick}>Click to test</Button>
-        </div>
       </RoleGate>
+      <div className="flex items-center justify-between">
+        <span>Admin-only API Route</span>
+        <Button variant={"secondary"} size={"sm"} onClick={onApiRouteClick}>Click to test</Button>
+      </div>
+      <div className="flex items-center justify-between">
+        <span>Admin-only Server Action</span>
+        <Button variant={"secondary"} size={"sm"} onClick={onServerActionClick}>Click to test</Button>
+      </div>
     </div>
   )
 }
