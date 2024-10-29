@@ -70,7 +70,7 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="text-sm space-y-6 shadow-md px-4 py-6 rounded-md border border-[#161b22]">
+    <div className="text-sm space-y-6 shadow-md px-4 py-6 rounded-md">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
           <FormField

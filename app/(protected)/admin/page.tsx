@@ -27,7 +27,7 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="text-sm space-y-6 shadow-md px-4 py-6 rounded-md border border-[#161b22]">
+    <div className="text-sm space-y-6 shadow-md px-4 py-6 rounded-md">
       <RoleGate allowedRole={UserRole.ADMIN}>
         <h1>Admin Page</h1>
         <div className="flex items-center justify-between">

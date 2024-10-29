@@ -10,7 +10,7 @@ export default async function ProtectedLayout({
   const session = await auth()
   return (
     <SessionProvider session={session}>
-      <div className="min-h-screen bg-[#0d1117] text-[#ecf2f8]">
+      <div>
         <Navbar />
         <div className="container mx-auto max-w-xl">
           {children}

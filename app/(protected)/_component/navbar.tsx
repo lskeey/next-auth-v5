@@ -14,10 +14,10 @@ const Navbar = () => {
           <IoShieldHalfOutline /> auth
         </div>
         <div className="space-x-4 text-sm">
-          <Link href="/server" className={`hover:border-b-2 ${pathName === "/server" ? "border-b-2" : ""}`}>Server</Link>
-          <Link href="/client" className={`hover:border-b-2 ${pathName === "/client" ? "border-b-2" : ""}`}>Client</Link>
-          <Link href="/admin" className={`hover:border-b-2 ${pathName === "/admin" ? "border-b-2" : ""}`}>Admin</Link>
-          <Link href="/settings" className={`hover:border-b-2 ${pathName === "/settings" ? "border-b-2" : ""}`}>Settings</Link>
+          <Link href="/server" className={`border-black hover:border-b-2 ${pathName === "/server" ? "border-b-2" : ""}`}>Server</Link>
+          <Link href="/client" className={`border-black hover:border-b-2 ${pathName === "/client" ? "border-b-2" : ""}`}>Client</Link>
+          <Link href="/admin" className={`border-black hover:border-b-2 ${pathName === "/admin" ? "border-b-2" : ""}`}>Admin</Link>
+          <Link href="/settings" className={`border-black hover:border-b-2 ${pathName === "/settings" ? "border-b-2" : ""}`}>Settings</Link>
         </div>
         <UserButton />
       </div>
