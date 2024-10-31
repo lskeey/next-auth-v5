@@ -22,6 +22,8 @@ import { FormSuccess } from "../form-success"
 import Link from "next/link"
 import CardWrapper from "./card-wrapper"
 
+import { OtpStyledInput } from "@/components/ui/extension/otp-input"
+
 const LoginForm = () => {
   const searchParams = useSearchParams()
   const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider!" : ""
@@ -36,7 +38,7 @@ const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      code: ""
+      otp: ""
     },
   })
 
@@ -65,64 +67,86 @@ const LoginForm = () => {
   }
 
   return (
-    <CardWrapper
-      headerLabel="Login"
-      switchButtonLabel="Don't have an account?"
-      switchButtonHref="/auth/register"
-      showSocial>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-          {showTwoFactor && (
+    <>
+      {!showTwoFactor && (
+      <CardWrapper
+        headerLabel="Login"
+        switchButtonLabel="Don't have an account?"
+        switchButtonHref="/auth/register"
+        showSocial>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
             <FormField
-            control={form.control}
-            name="code"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input placeholder="Two Factor Code" {...field} disabled={isPending} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="email" placeholder="Email" {...field} disabled={isPending} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          )}
-          {!showTwoFactor && (
-            <>
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="password" placeholder="Password" {...field} disabled={isPending} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Link href="/auth/reset" className="block text-sm hover:underline">Forgot password?</Link>
+            <FormError message={error || urlError} />
+            <FormSuccess message={success} />
+            <Button type="submit" className="w-full" disabled={isPending}>
+              Sign in
+            </Button>
+          </form>
+        </Form>
+      </CardWrapper>
+      )}
+      {showTwoFactor && (
+        <div className="max-w-md h-fit flex items-center justify-center outline outline-1 outline-muted rounded-md p-4 bg-background shadow-lg">
+          <div className="w-full space-x-2 space-y-6">
+            <div className="space-y-1">
+              <h2 className="font-semibold">OTP verification</h2>
+              <p className="text-xs">
+                Enter the 6-digit code sent to your email address or phone number
+              </p>
+            </div>
+            <Form {...form}>
+              <form className="grid gap-6" onSubmit={form.handleSubmit(onSubmit)}>
+                <FormField
+                  control={form.control}
+                  name="otp"
+                  render={({ field }) => (
                     <FormControl>
-                      <Input type="email" placeholder="Email" {...field} disabled={isPending} />
+                      <>
+                        <FormItem>
+                          <OtpStyledInput
+                            numInputs={6}
+                            inputType="text"
+                            {...field}
+                            disabled={isPending}
+                          />
+                        </FormItem>
+                        <FormMessage />
+                      </>
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input type="password" placeholder="Password" {...field} disabled={isPending} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Link href="/auth/reset" className="block text-sm hover:underline">Forgot password?</Link>
-            </>
-          )}
-          <FormError message={error || urlError} />
-          <FormSuccess message={success} />
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {showTwoFactor ? "Confirm" : "Sign in"}
-          </Button>
-        </form>
-      </Form>
-    </CardWrapper>
+                  )}
+                />
+                <Button type="submit" disabled={isPending}>Submit</Button>
+              </form>
+            </Form>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
