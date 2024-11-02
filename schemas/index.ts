@@ -1,6 +1,10 @@
 import { UserRole } from "@prisma/client"
 import { z } from "zod"
 
+const passwordValidation = new RegExp(
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+);
+
 export const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
@@ -11,6 +15,10 @@ export const RegisterSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   password: z.string()
+  .min(8, { message: 'Must have at least 8 character' })
+  .regex(passwordValidation, {
+    message: 'Your password is not valid',
+  }),
 })
 
 export const ResetSchema = z.object({
