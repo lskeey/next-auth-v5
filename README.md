@@ -9,7 +9,7 @@
   </p>
 
   <p align="center">
-    <img src="/images/auth_login.png" alt="Login Page" width="600" />
+    <img src="./public/images/auth_login.png" alt="Login Page" width="600" />
   </p>
 
   <p>Built with the tools and technologies:</p>
@@ -58,7 +58,7 @@ Follow these simple steps to get the project up and running on your local machin
 
 1.  **Clone the repository**:
     ```bash
-    git clone [repository-url]
+    git clone https://github.com/lskeey/next-auth-v5.git
     cd next-auth-v5
     ```
 
